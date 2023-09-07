@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import dev.bearded.challenge01.model.Video;
 import dev.bearded.challenge01.model.dto.VideoDTO;
 import dev.bearded.challenge01.repository.VideoRepository;
 
@@ -17,15 +18,21 @@ public class VideoService {
 	}
 
 	public List<VideoDTO> getAllVideos() {
-
-		return videoRepository.findAll().stream()
-				.map(v -> new VideoDTO(v.getId(), v.getTitulo(), v.getDescricao(), v.getUrl())).toList();
+		return videoRepository.findAll().stream().map(VideoDTO::new).toList();
 	}
 
 	public VideoDTO getVideoById(Long id) {
-		return videoRepository.findById(id)
-				.map(video -> new VideoDTO(video.getId(), video.getTitulo(), video.getDescricao(), video.getUrl()))
-				.orElseThrow();
+		return videoRepository.findById(id).map(VideoDTO::new).orElseThrow();
+	}
+
+	public VideoDTO saveVideo(VideoDTO video) {
+		if(video.id() != null) {
+			Video updatedVideo = videoRepository.save(new Video(video.id(), video.titulo(), video.descricao(), video.url()));
+			return new VideoDTO(updatedVideo);
+		}
+		Video newVideo = videoRepository.save(new Video(video.titulo(), video.descricao(), video.titulo()));
+		return new VideoDTO(newVideo);
+		
 	}
 
 }

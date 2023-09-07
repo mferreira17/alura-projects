@@ -20,46 +20,34 @@ public class Video {
 
 	private String url;
 
+	public Video() {
+	}
+
+	public Video(Long id, String titulo, String descricao, String url) {
+		this(titulo, descricao, url);
+		this.id = id;
+	}
+
 	public Video(String titulo, String descricao, String url) {
 		this.titulo = titulo;
 		this.descricao = descricao;
 		this.url = url;
 	}
-	
-	
-	
 
 	public Long getId() {
 		return id;
 	}
 
-
-
-
 	public String getTitulo() {
 		return titulo;
 	}
-
-
-
 
 	public String getDescricao() {
 		return descricao;
 	}
 
-
-
-
 	public String getUrl() {
 		return url;
-	}
-
-
-
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(descricao, id, titulo, url);
 	}
 
 	@Override
@@ -74,7 +62,5 @@ public class Video {
 		return Objects.equals(descricao, other.descricao) && Objects.equals(id, other.id)
 				&& Objects.equals(titulo, other.titulo) && Objects.equals(url, other.url);
 	}
-	
-	
 
 }
